@@ -18,15 +18,6 @@
 
                     <form wire:submit.prevent="saveTransaction">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                            <div>
-                                <label for="transaction_type" class="block font-medium text-sm text-gray-700">Tipe Transaksi</label>
-                                <select id="transaction_type" wire:model.live="transaction_type" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                                    <option value="Pengeluaran">Pengeluaran</option>
-                                    <option value="Pemasukan">Pemasukan</option>
-                                </select>
-                            </div>
-
                             <div>
                                 <label for="category_id" class="block font-medium text-sm text-gray-700">Kategori</label>
                                 <select id="category_id" wire:model="category_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">

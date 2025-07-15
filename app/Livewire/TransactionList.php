@@ -11,16 +11,19 @@ class TransactionList extends Component
 {
     use WithPagination;
 
-    public function render()
-    {
-        $transactions = Transaction::where('user_id', Auth::id())
-            ->with(['category', 'paymentMethod']) // Eager Loading
-            ->latest('transaction_date')
-            ->paginate(10); // Ambil 10 data per halaman
+    public $sortField = 'transaction_date';
+    public $sortDirection = 'desc';
 
-        return view('livewire.transaction-list', [
-            'transactions' => $transactions
-        ]);
+    public $search = '';
+
+    public function sortBy($field)
+    {
+        if ($this->sortField === $field) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortDirection = 'asc';
+        }
+        $this->sortField = $field;
     }
 
     public function deleteTransaction($id)
@@ -31,5 +34,23 @@ class TransactionList extends Component
         }
         $transaction->delete();
         session()->flash('message', 'Transaksi berhasil dihapus.');
+    }
+
+    public function render()
+    {
+        $query = Transaction::where('user_id', Auth::id())
+            ->with(['category', 'paymentMethod']);
+
+        if ($this->search) {
+            $query->where('description', 'like', '%' . $this->search . '%');
+        }
+
+        $query->orderBy($this->sortField, $this->sortDirection);
+
+        $transactions = $query->paginate(10);
+
+        return view('livewire.transaction-list', [
+            'transactions' => $transactions
+        ]);
     }
 }

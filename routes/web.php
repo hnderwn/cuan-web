@@ -3,7 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Livewire\CategoryManager;
 use App\Livewire\PaymentMethodManager;
-use App\Livewire\TransactionForm;
+use App\Livewire\ExpenseForm;
+use App\Livewire\IncomeForm;
 use App\Livewire\TransactionList;
 use App\Livewire\TransactionEditForm;
 use Illuminate\Support\Facades\Route;
@@ -49,7 +50,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Route untuk komponen Livewire kita
     Route::get('/categories', CategoryManager::class)->name('categories');
     Route::get('/payment-methods', PaymentMethodManager::class)->name('payment-methods');
-    Route::get('/transactions/create', TransactionForm::class)->name('transactions.create');
+    Route::get('/expenses/create', ExpenseForm::class)->name('expenses.create');
+    Route::get('/incomes/create', IncomeForm::class)->name('incomes.create');
     Route::get('/transactions', TransactionList::class)->name('transactions.index');
     Route::get('/transactions/{transaction}/edit', TransactionEditForm::class)->name('transactions.edit');
 });

@@ -9,13 +9,34 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+
+                    @if (session()->has('message'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <span class="block sm:inline">{{ session('message') }}</span>
+                    </div>
+                    @endif
+
+                    <div class="mb-4">
+                        <input
+                            type="text"
+                            wire:model.live.debounce.300ms="search"
+                            placeholder="Cari berdasarkan deskripsi..."
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+
                     <div class="overflow-x-auto">
                         <table class="min-w-full leading-normal">
                             <thead>
                                 <tr>
-                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Tanggal</th>
-                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Deskripsi</th>
-                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Jumlah</th>
+                                    <th wire:click="sortBy('transaction_date')" class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Tanggal @if($sortField === 'transaction_date') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif
+                                    </th>
+                                    <th wire:click="sortBy('description')" class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Deskripsi @if($sortField === 'description') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif
+                                    </th>
+                                    <th wire:click="sortBy('amount')" class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Jumlah @if($sortField === 'amount') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif
+                                    </th>
                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Kategori</th>
                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Metode Bayar</th>
                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Aksi</th>
@@ -52,8 +73,8 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="5" class="px-5 py-5 text-center text-gray-500">
-                                        Kamu belum punya transaksi.
+                                    <td colspan="6" class="px-5 py-5 text-center text-gray-500">
+                                        Tidak ada transaksi yang cocok dengan pencarian "{{ $search }}".
                                     </td>
                                 </tr>
                                 @endforelse

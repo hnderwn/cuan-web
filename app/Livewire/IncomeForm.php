@@ -8,9 +8,9 @@ use App\Models\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class TransactionForm extends Component
+class IncomeForm extends Component
 {
-    public $transaction_type = 'Pengeluaran';
+    public $transaction_type = 'Pemasukan'; // Dikunci di sini
     public $amount;
     public $transaction_date;
     public $description;
@@ -18,15 +18,12 @@ class TransactionForm extends Component
     public $payment_method_id;
     public $notes;
 
-    // Properti untuk menampung data dropdown
     public $categories = [];
     public $paymentMethods = [];
 
-    // Aturan validasi
     protected function rules()
     {
         return [
-            'transaction_type' => 'required|in:Pemasukan,Pengeluaran',
             'amount' => 'required|numeric|min:0',
             'transaction_date' => 'required|date',
             'description' => 'required|string|max:255',
@@ -36,46 +33,41 @@ class TransactionForm extends Component
         ];
     }
 
-    // Method ini berjalan saat komponen pertama kali di-load
     public function mount()
     {
         $this->transaction_date = now()->format('Y-m-d');
         $this->loadDropdownData();
     }
 
-    // Method ini akan dipanggil setiap kali $transaction_type berubah
-    public function updatedTransactionType()
-    {
-        $this->loadDropdownData();
-        $this->reset('category_id'); // Reset pilihan kategori
-    }
-
     public function saveTransaction()
     {
-        $validatedData = $this->validate();
+        $this->validate();
 
-        Auth::user()->transactions()->create($validatedData);
+        $dataToSave = [
+            'transaction_type' => $this->transaction_type,
+            'amount' => $this->amount,
+            'transaction_date' => $this->transaction_date,
+            'description' => $this->description,
+            'category_id' => $this->category_id,
+            'payment_method_id' => $this->payment_method_id,
+            'notes' => $this->notes,
+        ];
 
-        session()->flash('message', 'Transaksi berhasil disimpan!');
-        $this->reset([
-            'amount',
-            'description',
-            'category_id',
-            'payment_method_id',
-            'notes'
-        ]);
-        // Tidak mereset transaction_type dan transaction_date untuk kemudahan input berikutnya
+        Auth::user()->transactions()->create($dataToSave);
+
+        session()->flash('message', 'Pemasukan berhasil disimpan!');
+        $this->reset(['amount', 'description', 'category_id', 'payment_method_id', 'notes']);
     }
 
     private function loadDropdownData()
     {
         $user = Auth::user();
-        $this->categories = $user->categories()->where('transaction_type', $this->transaction_type)->get();
+        $this->categories = $user->categories()->where('transaction_type', 'Pemasukan')->get();
         $this->paymentMethods = $user->paymentMethods()->get();
     }
 
     public function render()
     {
-        return view('livewire.transaction-form');
+        return view('livewire.income-form');
     }
 }

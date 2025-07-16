@@ -36,6 +36,19 @@
     let expensePieChart = null;
     let expenseBarChart = null;
 
+    const brandColors = [
+        '#163020',
+        '#1d7942',
+        '#8BC34A',
+        '#FF9800',
+        '#2196F3',
+        '#E91E63',
+        '#CDDC39',
+        '#795548',
+        '#673AB7',
+        '#00BCD4'
+    ];
+
     Livewire.on('updateCharts', (event) => {
         setTimeout(() => {
             if (document.getElementById('expensePieChart')) {
@@ -48,7 +61,8 @@
                         labels: pieChartData.labels,
                         datasets: [{
                             label: 'Pengeluaran',
-                            data: pieChartData.data
+                            data: pieChartData.data,
+                            backgroundColor: brandColors
                         }]
                     },
                     options: {
@@ -63,20 +77,13 @@
                 const barCtx = document.getElementById('expenseBarChart');
                 if (expenseBarChart) expenseBarChart.destroy();
                 expenseBarChart = new Chart(barCtx, {
-                    type: 'polarArea', // <-- PERUBAHAN UTAMA DI SINI
+                    type: 'polarArea',
                     data: {
                         labels: barChartData.labels,
                         datasets: [{
                             label: 'Total Pengeluaran',
                             data: barChartData.data,
-                            backgroundColor: [ // Kita butuh lebih banyak warna untuk polar area
-                                'rgba(255, 99, 132, 0.7)',
-                                'rgba(54, 162, 235, 0.7)',
-                                'rgba(255, 206, 86, 0.7)',
-                                'rgba(75, 192, 192, 0.7)',
-                                'rgba(153, 102, 255, 0.7)',
-                                'rgba(255, 159, 64, 0.7)'
-                            ],
+                            backgroundColor: brandColors
                         }]
                     },
                     options: {

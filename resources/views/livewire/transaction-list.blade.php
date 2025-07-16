@@ -1,18 +1,18 @@
 <div>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-700 leading-tight">
             {{ __('Daftar Transaksi') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-sm rounded-xl">
                 <div class="p-6 text-gray-900">
 
                     @if (session()->has('message'))
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-                        <span class="block sm:inline">{{ session('message') }}</span>
+                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
+                        <p>{{ session('message') }}</p>
                     </div>
                     @endif
 
@@ -21,25 +21,25 @@
                             type="text"
                             wire:model.live.debounce.300ms="search"
                             placeholder="Cari berdasarkan deskripsi..."
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                            class="w-full px-3 py-2 border-gray-300 rounded-lg shadow-sm focus:border-brand-dark focus:ring-brand-dark">
                     </div>
 
                     <div class="overflow-x-auto">
                         <table class="min-w-full leading-normal">
                             <thead>
                                 <tr>
-                                    <th wire:click="sortBy('transaction_date')" class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <th wire:click="sortBy('transaction_date')" class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-l-lg">
                                         Tanggal @if($sortField === 'transaction_date') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif
                                     </th>
-                                    <th wire:click="sortBy('description')" class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <th wire:click="sortBy('description')" class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                         Deskripsi @if($sortField === 'description') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif
                                     </th>
-                                    <th wire:click="sortBy('amount')" class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <th wire:click="sortBy('amount')" class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                         Jumlah @if($sortField === 'amount') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif
                                     </th>
-                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Kategori</th>
-                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Metode Bayar</th>
-                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Aksi</th>
+                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Kategori</th>
+                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Metode Bayar</th>
+                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-r-lg">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,7 +65,7 @@
                                         <p class="text-gray-900 whitespace-no-wrap">{{ $transaction->paymentMethod->name ?? 'N/A' }}</p>
                                     </td>
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <a href="{{ route('transactions.edit', $transaction) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                        <a href="{{ route('transactions.edit', $transaction) }}" class="text-green-800 hover:text-green-900">Edit</a>
                                         <button wire:click="deleteTransaction({{ $transaction->id }})" wire:confirm="Yakin mau hapus transaksi ini?" class="text-red-600 hover:text-red-900 ml-4">
                                             Hapus
                                         </button>

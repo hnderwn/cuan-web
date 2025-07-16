@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     protected $fillable = [
+        'user_id',
         'category_id',
         'payment_method_id',
         'transaction_type',

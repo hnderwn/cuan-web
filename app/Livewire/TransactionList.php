@@ -10,6 +10,8 @@ use Livewire\WithPagination;
 class TransactionList extends Component
 {
     use WithPagination;
+    
+    protected string $paginationTheme = 'tailwind';
 
     public $sortField = 'transaction_date';
     public $sortDirection = 'desc';

@@ -7,6 +7,8 @@ use App\Livewire\ExpenseForm;
 use App\Livewire\IncomeForm;
 use App\Livewire\TransactionList;
 use App\Livewire\TransactionEditForm;
+use App\Livewire\TransactionImporter;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -54,6 +56,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/incomes/create', IncomeForm::class)->name('incomes.create');
     Route::get('/transactions', TransactionList::class)->name('transactions.index');
     Route::get('/transactions/{transaction}/edit', TransactionEditForm::class)->name('transactions.edit');
+    Route::get('/import', TransactionImporter::class)->name('import');
+    Route::get('/import/template', function () {
+        $path = public_path('template/template_transaksi.csv');
+        $headers = [
+            'Content-Type' => 'text/csv',
+        ];
+        // Pastikan file template ada di public/template/template_transaksi.csv
+        // Untuk sekarang kita buat manual dulu file csv nya
+        return response()->download($path, 'template_transaksi.csv', $headers);
+    })->name('import.template');
 });
 
 

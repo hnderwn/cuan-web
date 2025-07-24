@@ -17,11 +17,11 @@
 <body class="font-sans antialiased">
     <div
         x-data="{ sidebarOpen: false, sidebarFull: $persist(true) }"
-        x-on:keydown.escape.window="sidebarOpen = false" {{-- Tambahan: tutup sidebar dengan tombol Esc --}}
+        x-on:keydown.escape.window="sidebarOpen = false"
         x-cloak
         class="flex h-screen bg-brand-lightest">
         <aside
-            @click.away="sidebarOpen = false" {{-- Tambahan: tutup sidebar saat klik di luar area --}}
+            @click.away="sidebarOpen = false"
             :class="{ 'translate-x-0': sidebarOpen, 'w-64': sidebarFull, 'w-14': !sidebarFull }"
             class="fixed inset-y-0 left-0 z-30 flex-shrink-0 overflow-y-auto transition-all duration-500 transform bg-brand-darkest -translate-x-full lg:static lg:translate-x-0">
 
@@ -31,14 +31,25 @@
         <div x-show="sidebarOpen" class="fixed inset-0 z-20 bg-black opacity-50 lg:hidden" @click="sidebarOpen = false"></div>
 
         <div class="flex-1 flex flex-col overflow-hidden">
-            <header class="flex items-center justify-between p-4 bg-white border-b">
+            <header class="flex items-center justify-between p-4 bg-white border-b
+                   shadow-sm transition-shadow duration-300 ease-in-out">
                 <div>
-                    <button @click.stop="sidebarOpen = !sidebarOpen" class="text-gray-500 focus:outline-none lg:hidden">
+                    {{-- Tombol sidebar (mobile) --}}
+                    <button @click.stop="sidebarOpen = !sidebarOpen"
+                        class="text-gray-500 hover:text-brand-dark
+                           focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-lg p-1
+                           transition duration-200 ease-in-out lg:hidden
+                           hover:scale-110 active:scale-90 active:bg-brand-dark active:text-white transform">
                         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4 6H20M4 12H20M4 18H11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg>
                     </button>
-                    <button @click.stop="sidebarFull = !sidebarFull" class="text-gray-500 focus:outline-none hidden lg:block">
+                    {{-- Tombol sidebar (desktop) --}}
+                    <button @click.stop="sidebarFull = !sidebarFull"
+                        class="text-gray-500 hover:text-brand-dark 
+                           focus:outline-none focus:ring-1 focus:ring-gray-300 rounded-lg p-1
+                           transition duration-200 ease-in-out hidden lg:block
+                           hover:scale-110 active:scale-90 active:bg-brand-dark active:text-white transform">
                         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4 6H20M4 12H14M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg>
@@ -60,7 +71,9 @@
                 </div>
             </main>
         </div>
+
     </div>
+    @livewireScripts
 </body>
 
 </html>

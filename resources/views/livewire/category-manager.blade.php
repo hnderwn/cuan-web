@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm rounded-xl">
                 <div class="p-6 text-gray-900">
 
@@ -15,13 +15,19 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <label for="name" class="block font-medium text-sm text-gray-700">Nama Kategori</label>
-                                <input id="name" type="text" wire:model="name" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-dark focus:ring-brand-dark">
+                                <input id="name" type="text" wire:model="name"
+                                    class="mt-1 block w-full border-gray-300 rounded-lg
+                                          shadow-sm focus:border-brand-dark focus:ring-brand-dark
+                                          transition duration-300 focus:shadow-md focus:scale-[1.005]">
                                 @error('name') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                             </div>
 
                             <div>
                                 <label for="transaction_type" class="block font-medium text-sm text-gray-700">Tipe Transaksi</label>
-                                <select id="transaction_type" wire:model="transaction_type" class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-dark focus:ring-brand-dark">
+                                <select id="transaction_type" wire:model="transaction_type"
+                                    class="mt-1 block w-full border-gray-300 rounded-lg
+                                           shadow-sm focus:border-brand-dark focus:ring-brand-dark
+                                           transition duration-300 focus:shadow-md focus:scale-[1.005]">
                                     <option value="Pengeluaran">Pengeluaran</option>
                                     <option value="Pemasukan">Pemasukan</option>
                                 </select>
@@ -29,11 +35,20 @@
                             </div>
 
                             <div class="flex items-end space-x-2">
-                                <button type="submit" class="{{ $editingCategoryId ? 'bg-blue-600 hover:bg-blue-700' : 'bg-brand-dark hover:bg-brand-darkest' }} text-white font-bold py-2 px-4 rounded-lg transition duration-150">
+                                <button type="submit"
+                                    class="{{ $editingCategoryId ? 'bg-blue-600 hover:bg-blue-700' : 'bg-brand-dark hover:bg-brand-darkest' }}
+                                           text-white font-bold py-2 px-4 rounded-lg
+                                           transition duration-200 ease-in-out
+                                           shadow-lg hover:shadow-xl active:shadow-md
+                                           hover:scale-105 active:scale-95">
                                     {{ $editingCategoryId ? 'Update Kategori' : 'Simpan' }}
                                 </button>
                                 @if ($editingCategoryId)
-                                <button type="button" wire:click="cancelEdit" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition duration-150">
+                                <button type="button" wire:click="cancelEdit"
+                                    class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg
+                                           transition duration-200 ease-in-out
+                                           shadow-lg hover:shadow-xl active:shadow-md
+                                           hover:scale-105 active:scale-95">
                                     Batal
                                 </button>
                                 @endif
@@ -58,7 +73,8 @@
                             </thead>
                             <tbody>
                                 @forelse ($categories as $category)
-                                <tr wire:key="{{ $category->id }}">
+                                <tr wire:key="{{ $category->id }}"
+                                    class="transition duration-150 ease-in-out hover:bg-gray-50 hover:shadow-md">
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                         <p class="text-gray-900 whitespace-no-wrap">{{ $category->name }}</p>
                                     </td>
@@ -66,8 +82,20 @@
                                         <p class="text-gray-900 whitespace-no-wrap">{{ $category->transaction_type }}</p>
                                     </td>
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
-                                        <button wire:click="editCategory({{ $category->id }})" class="text-green-800 hover:text-green-900">Edit</button>
-                                        <button wire:click="deleteCategory({{ $category->id }})" wire:confirm="Yakin mau hapus kategori '{{ $category->name }}'?" class="text-red-600 hover:text-red-900 ml-4">Hapus</button>
+                                        <button wire:click="editCategory({{ $category->id }})"
+                                            class="text-green-800 hover:text-green-600
+                                                   transition duration-200 ease-in-out
+                                                   hover:scale-105 active:scale-95
+                                                   hover:-translate-y-0.5 transform focus:outline-none">
+                                            Edit
+                                        </button>
+                                        <button wire:click="deleteCategory({{ $category->id }})" wire:confirm="Yakin mau hapus kategori '{{ $category->name }}'?"
+                                            class="text-red-600 hover:text-red-400 ml-4
+                                                   transition duration-200 ease-in-out
+                                                   hover:scale-105 active:scale-95
+                                                   hover:-translate-y-0.5 transform focus:outline-none">
+                                            Hapus
+                                        </button>
                                     </td>
                                 </tr>
                                 @empty
@@ -85,4 +113,5 @@
             </div>
         </div>
     </div>
+
 </div>

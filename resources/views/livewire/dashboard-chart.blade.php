@@ -4,12 +4,12 @@
             <nav class="-mb-px flex space-x-8" aria-label="Tabs">
                 <button
                     wire:click="showChart('pie')"
-                    class="{{ $activeChart === 'pie' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                    class="{{ $activeChart === 'pie' ? 'border-brand-dark text-brand-dark' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
                     Pengeluaran per Kategori
                 </button>
                 <button
                     wire:click="showChart('bar')"
-                    class="{{ $activeChart === 'bar' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                    class="{{ $activeChart === 'bar' ? 'border-brand-dark text-brand-dark' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
                     Tren Pengeluaran
                 </button>
             </nav>

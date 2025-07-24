@@ -21,20 +21,28 @@
                             type="text"
                             wire:model.live.debounce.300ms="search"
                             placeholder="Cari berdasarkan deskripsi..."
-                            class="w-full px-3 py-2 border-gray-300 rounded-lg shadow-sm focus:border-brand-dark focus:ring-brand-dark">
+                            class="w-full px-3 py-2 border-gray-300 rounded-lg
+                               shadow-sm focus:border-brand-dark focus:ring-brand-dark
+                               transition duration-300 focus:shadow-md focus:scale-[1.005]">
                     </div>
 
                     <div class="overflow-x-auto">
                         <table class="min-w-full leading-normal">
                             <thead>
                                 <tr>
-                                    <th wire:click="sortBy('transaction_date')" class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-l-lg">
+                                    <th wire:click="sortBy('transaction_date')"
+                                        class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-l-lg
+                                           transition duration-150 ease-in-out hover:bg-gray-100 hover:shadow-sm">
                                         Tanggal @if($sortField === 'transaction_date') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif
                                     </th>
-                                    <th wire:click="sortBy('description')" class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <th wire:click="sortBy('description')"
+                                        class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider
+                                           transition duration-150 ease-in-out hover:bg-gray-100 hover:shadow-sm">
                                         Deskripsi @if($sortField === 'description') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif
                                     </th>
-                                    <th wire:click="sortBy('amount')" class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <th wire:click="sortBy('amount')"
+                                        class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider
+                                           transition duration-150 ease-in-out hover:bg-gray-100 hover:shadow-sm">
                                         Jumlah @if($sortField === 'amount') <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif
                                     </th>
                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Kategori</th>
@@ -44,7 +52,8 @@
                             </thead>
                             <tbody>
                                 @forelse ($transactions as $transaction)
-                                <tr wire:key="{{ $transaction->id }}">
+                                <tr wire:key="{{ $transaction->id }}"
+                                    class="transition duration-150 ease-in-out hover:bg-gray-50 hover:shadow-md">
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                         <p class="text-gray-900 whitespace-no-wrap">{{ \Carbon\Carbon::parse($transaction->transaction_date)->format('d M Y') }}</p>
                                     </td>
@@ -65,8 +74,19 @@
                                         <p class="text-gray-900 whitespace-no-wrap">{{ $transaction->paymentMethod->name ?? 'N/A' }}</p>
                                     </td>
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <a href="{{ route('transactions.edit', $transaction) }}" class="text-green-800 hover:text-green-900">Edit</a>
-                                        <button wire:click="deleteTransaction({{ $transaction->id }})" wire:confirm="Yakin mau hapus transaksi ini?" class="text-red-600 hover:text-red-900 ml-4">
+                                        {{-- Mengembalikan ke <a> dan menambahkan inline-block --}}
+                                        <a href="{{ route('transactions.edit', $transaction) }}"
+                                            class="text-green-800 hover:text-green-600 inline-block
+                                              transition duration-200 ease-in-out
+                                              hover:scale-105 active:scale-95
+                                              hover:-translate-y-0.5 transform focus:outline-none">
+                                            Edit
+                                        </a>
+                                        <button wire:click="deleteTransaction({{ $transaction->id }})" wire:confirm="Yakin mau hapus transaksi ini?"
+                                            class="text-red-600 hover:text-red-400 ml-4
+                                                   transition duration-200 ease-in-out
+                                                   hover:scale-105 active:scale-95
+                                                   hover:-translate-y-0.5 transform focus:outline-none">
                                             Hapus
                                         </button>
                                     </td>

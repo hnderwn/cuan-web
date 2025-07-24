@@ -62,8 +62,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         $headers = [
             'Content-Type' => 'text/csv',
         ];
-        // Pastikan file template ada di public/template/template_transaksi.csv
-        // Untuk sekarang kita buat manual dulu file csv nya
         return response()->download($path, 'template_transaksi.csv', $headers);
     })->name('import.template');
 });

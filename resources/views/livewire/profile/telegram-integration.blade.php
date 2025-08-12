@@ -11,11 +11,20 @@
 
     <div class="mt-6 space-y-4">
         @if(Auth::user()->telegram_chat_id)
+        {{-- TAMPILAN JIKA SUDAH TERHUBUNG --}}
         <div class="p-4 bg-green-100 text-green-800 rounded-lg">
-            <p class="font-semibold">Akun Anda sudah terhubung!</p>
+            <p class="font-semibold">✅ Akun Anda sudah terhubung!</p>
             <p class="text-sm">Anda sekarang bisa mengirim perintah ke bot Telegram.</p>
         </div>
+        <button
+            wire:click="disconnectTelegram"
+            wire:confirm="Yakin mau putuskan koneksi? Bot tidak akan bisa lagi mencatat transaksimu."
+            class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-transform duration-150 hover:scale-105 active:scale-95">
+            Putuskan Koneksi
+        </button>
+
         @else
+        {{-- TAMPILAN JIKA BELUM TERHUBUNG --}}
         <div>
             <p class="text-sm text-gray-600">
                 1. Klik tombol di bawah untuk membuat Token Rahasia.
@@ -28,27 +37,27 @@
         @if(Auth::user()->telegram_token)
         <div
             x-data="{ 
-                            token: '{{ Auth::user()->telegram_token }}', 
-                            feedback: 'Salin',
-                            copyToClipboard() {
-                                const textToCopy = '/start ' + this.token;
-                                const tempInput = document.createElement('input');
-                                tempInput.style.position = 'absolute';
-                                tempInput.style.left = '-9999px';
-                                tempInput.value = textToCopy;
-                                document.body.appendChild(tempInput);
-                                tempInput.select();
-                                try {
-                                    document.execCommand('copy');
-                                    this.feedback = 'Tersalin!';
-                                    setTimeout(() => { this.feedback = 'Salin' }, 2000);
-                                } catch (err) {
-                                    console.error('Gagal menyalin teks: ', err);
-                                    alert('Oops, gagal menyalin teks!');
-                                }
-                                document.body.removeChild(tempInput);
+                        token: '{{ Auth::user()->telegram_token }}', 
+                        feedback: 'Salin',
+                        copyToClipboard() {
+                            const textToCopy = '/start ' + this.token;
+                            const tempInput = document.createElement('input');
+                            tempInput.style.position = 'absolute';
+                            tempInput.style.left = '-9999px';
+                            tempInput.value = textToCopy;
+                            document.body.appendChild(tempInput);
+                            tempInput.select();
+                            try {
+                                document.execCommand('copy');
+                                this.feedback = 'Tersalin!';
+                                setTimeout(() => { this.feedback = 'Salin' }, 2000);
+                            } catch (err) {
+                                console.error('Gagal menyalin teks: ', err);
+                                alert('Oops, gagal menyalin teks!');
                             }
-                        }">
+                            document.body.removeChild(tempInput);
+                        }
+                    }">
             <p class="text-sm text-gray-600 mt-4">
                 2. Buka bot Telegram Anda, lalu kirim pesan berikut:
             </p>

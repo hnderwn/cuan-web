@@ -49,6 +49,24 @@
                             </div>
                             <livewire:dashboard.recent-transactions />
                         </div>
+                        <div class="md:col-span-2 bg-white p-6 rounded-xl shadow-lg">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-2">Anggaran Bulan Ini</h3>
+                            @if($totalBudget > 0)
+                            <div class="text-sm text-gray-600">
+                                <span class="font-bold text-red-600">Rp {{ number_format($monthlyExpense, 0, ',', '.') }}</span> terpakai dari
+                                <span class="font-bold text-gray-800">Rp {{ number_format($totalBudget, 0, ',', '.') }}</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+                                <div class="bg-red-500 h-2.5 rounded-full" style="width: {{ $progressBarPercentage }}%"></div>
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1 text-right">{{ number_format($budgetUsagePercentage, 1) }}% terpakai</div>
+                            @else
+                            <p class="text-sm text-gray-500">
+                                Anda belum mengatur anggaran bulan ini.
+                                <a href="{{ route('budgets') }}" class="text-indigo-600 hover:underline" wire:navigate>Atur sekarang</a>.
+                            </p>
+                            @endif
+                        </div>
                     </div>
                 </div>
 
